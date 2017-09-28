@@ -17,7 +17,7 @@ public class PersonRepositoryImpl implements PersonRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private final String INSERT_SQL = "INSERT INTO person (firstName, lastName) VALUES (?,?)";
+    private final String INSERT_SQL = "INSERT INTO persons (firstName, lastName) VALUES (?,?)";
     // the ?? is a prepared statement for security
 
     @Override
@@ -25,28 +25,28 @@ public class PersonRepositoryImpl implements PersonRepository {
         jdbcTemplate.update(INSERT_SQL, person.getFirstName(), person.getLastName());
     }
 
-    private final String SELECT_BY_ID_SQL = "SELECT * FROM person WHERE id = ?";
+    private final String SELECT_BY_ID_SQL = "SELECT * FROM persons WHERE id = ?";
 
     @Override
     public Person getById(int id) {
         return jdbcTemplate.queryForObject(SELECT_BY_ID_SQL, new PersonMapper(), id);
     }
 
-    private final String SELECT_SQL = "SELECT * FROM person";
+    private final String SELECT_SQL = "SELECT * FROM persons";
 
     @Override
     public List<Person> get() {
         return jdbcTemplate.query(SELECT_SQL, new PersonMapper());
     }
 
-    private final String UPDATE_SQL = "UPDATE person SET firstName=?, lastName=? where id=?";
+    private final String UPDATE_SQL = "UPDATE persons SET firstName=?, lastName=? where id=?";
 
     @Override
     public void update(Person person) {
         jdbcTemplate.update(UPDATE_SQL, person.getFirstName(), person.getLastName(), person.getId());
     }
 
-    private final String DELETE_SQL = "DELETE FROM person WHERE id=?";
+    private final String DELETE_SQL = "DELETE FROM persons WHERE id=?";
 
     @Override
     public void delete(int id) {
